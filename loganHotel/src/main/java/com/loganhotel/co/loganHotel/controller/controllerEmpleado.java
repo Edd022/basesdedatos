@@ -1,7 +1,7 @@
 package com.loganhotel.co.loganHotel.controller;
 
 import com.loganhotel.co.loganHotel.entity.Empleado;
-import com.loganhotel.co.loganHotel.services.serviceEmpleado;
+import com.loganhotel.co.loganHotel.services.ServiceEmpleado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ import java.util.Optional;
 public class controllerEmpleado {
 
     @Autowired
-    private serviceEmpleado ServiceEmpleado;
+    private ServiceEmpleado ServiceEmpleado;
 
     @GetMapping
     public List<Empleado> getAll (){ return ServiceEmpleado.getEmpleados();}
