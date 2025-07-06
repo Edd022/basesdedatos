@@ -13,18 +13,20 @@ import java.util.Optional;
 public class controllerEmpleado {
 
     @Autowired
-    private ServiceEmpleado ServiceEmpleado;
+    private ServiceEmpleado serviceEmpleado;
 
     @GetMapping
-    public List<Empleado> getAll (){ return ServiceEmpleado.getEmpleados();}
+    public List<Empleado> getAll (){ return serviceEmpleado.getEmpleados();}
 
     @GetMapping("/{cedulaE}")
-    public Optional<Empleado> getEmpleado(@PathVariable Long cedulaE){return ServiceEmpleado.getEmpleadoById(cedulaE);}
+    public Optional<Empleado> getEmpleado(@PathVariable Long cedulaE){return serviceEmpleado.getEmpleadoById(cedulaE);}
 
     @PostMapping
-    public void saveOrUpdateEmpleado(@RequestBody Empleado empleado){ServiceEmpleado.saveOrUpdateEmpleado(empleado);}
+    public void saveOrUpdateEmpleado(@RequestBody Empleado empleado){
+        serviceEmpleado.saveOrUpdateEmpleado(empleado);}
 
     @DeleteMapping("/{cedulaE}")
-    public void deleteEmpleado(@PathVariable Long cedulaE){ServiceEmpleado.deleteEmpleadoById(cedulaE);}
+    public void deleteEmpleado(@PathVariable Long cedulaE){
+        serviceEmpleado.deleteEmpleadoById(cedulaE);}
 
 }
