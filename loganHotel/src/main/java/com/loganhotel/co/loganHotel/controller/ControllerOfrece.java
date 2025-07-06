@@ -1,6 +1,5 @@
 package com.loganhotel.co.loganHotel.controller;
 
-import com.loganhotel.co.loganHotel.entity.Hotel;
 import com.loganhotel.co.loganHotel.entity.Ofrece;
 import com.loganhotel.co.loganHotel.entity.OfreceId;
 import com.loganhotel.co.loganHotel.services.ServiceOfrece;
@@ -12,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/apihotel/ofrece")
-public class controllerOfrece {
+public class ControllerOfrece {
 
     @Autowired
     private ServiceOfrece serviceOfrece;

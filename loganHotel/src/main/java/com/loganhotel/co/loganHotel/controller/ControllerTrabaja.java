@@ -1,7 +1,5 @@
 package com.loganhotel.co.loganHotel.controller;
 
-import com.loganhotel.co.loganHotel.entity.TelefonoE;
-import com.loganhotel.co.loganHotel.entity.TelefonoEId;
 import com.loganhotel.co.loganHotel.entity.Trabaja;
 import com.loganhotel.co.loganHotel.entity.TrabajaId;
 import com.loganhotel.co.loganHotel.services.ServiceTrabaja;
@@ -13,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/apihotel/empleado-trabaja")
-public class controllerTrabaja {
+public class ControllerTrabaja {
     @Autowired
     private ServiceTrabaja serviceTrabaja;
 

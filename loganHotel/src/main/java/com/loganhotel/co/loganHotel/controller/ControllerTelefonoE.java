@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/apihotel/empleado-telefonos")
-public class controllerTelefonoE {
+public class ControllerTelefonoE {
 
     @Autowired
     private ServiceTelefonoE serviceTelefonoE;

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/apihotel/hotel")
-public class controllerHotel {
+public class ControllerHotel {
 
     @Autowired
     private ServiceHotel serviceHotel;
