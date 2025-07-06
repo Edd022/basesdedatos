@@ -9,17 +9,17 @@ import java.io.Serializable;
 
 @Data
 @Embeddable
-@NoArgsConstructor // obligatorio para JPA
-public class TelefonoEId implements Serializable {
+@NoArgsConstructor
+public class TrabajaId implements Serializable {
 
     @Column(name = "cedulaE", nullable = false, precision = 11, scale = 0)
     private Long cedulaE;
 
-    @Column(name = "telefonoE", nullable = false, precision = 12, scale = 0)
-    private Long telefonoE;
+    @Column(name = "idhotel", nullable = false, precision = 4, scale = 0)
+    private Long idHotel;
 
-    public TelefonoEId(Long cedulaE, Long telefonoE) {
+    public TrabajaId(Long cedulaE, Long idHotel) {
         this.cedulaE = cedulaE;
-        this.telefonoE = telefonoE;
+        this.idHotel = idHotel;
     }
 }
