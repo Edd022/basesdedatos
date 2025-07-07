@@ -4,12 +4,14 @@ import com.loganhotel.co.loganHotel.entity.Cliente;
 import com.loganhotel.co.loganHotel.services.ServiceCliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/apihotel/cliente")
+@PreAuthorize("hasRole('RECEPCION')")  // Solo recepción puede acceder
 public class ControllerCliente {
 
     @Autowired
@@ -37,6 +39,7 @@ public class ControllerCliente {
     }
 
     @DeleteMapping("/{cedulaC}")
+    @PreAuthorize("hasRole('ADMINISTRACION')")  // Solo admin puede borrar
     public void delete(@PathVariable Long cedulaC) {
         serviceCliente.deleteClienteByCedula(cedulaC);
     }

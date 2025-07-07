@@ -4,12 +4,14 @@ import com.loganhotel.co.loganHotel.entity.Servicio;
 import com.loganhotel.co.loganHotel.services.ServiceServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/apihotel/servicio")
+@PreAuthorize("hasRole('ADMINISTRACION')")  // Solo administración puede gestionar servicios
 public class ControllerServicio {
 
     @Autowired

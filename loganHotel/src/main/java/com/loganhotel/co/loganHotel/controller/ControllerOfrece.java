@@ -4,6 +4,7 @@ import com.loganhotel.co.loganHotel.entity.Ofrece;
 import com.loganhotel.co.loganHotel.entity.OfreceId;
 import com.loganhotel.co.loganHotel.services.ServiceOfrece;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/apihotel/ofrece")
+@PreAuthorize("hasAnyRole('ADMINISTRACION', 'SERVICIO')")
 public class ControllerOfrece {
 
     @Autowired
@@ -35,6 +37,7 @@ public class ControllerOfrece {
         serviceOfrece.saveOrUpdateOfrece(nuevoOfrece);
     }
 
+    @PreAuthorize("hasRole('ADMINISTRACION')")
     @DeleteMapping("/{idhotel}/{idservicio}")
     public void delete (@PathVariable Long idhotel, @PathVariable Long idservicio) {
         serviceOfrece.deleteOfreceById(new OfreceId(idhotel, idservicio));

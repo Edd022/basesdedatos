@@ -5,6 +5,7 @@ import com.loganhotel.co.loganHotel.entity.AdquiereId;
 import com.loganhotel.co.loganHotel.services.ServiceAdquiere;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/apihotel/adquiere")
+@PreAuthorize("hasRole('SERVICIO')")  // Protege toda la clase para el rol SERVICIO
 public class ControllerAdquiere {
 
     @Autowired
@@ -53,6 +55,7 @@ public class ControllerAdquiere {
     }
 
     @DeleteMapping("/{cedulaC}/{idHabitacion}/{idServicio}/{fechaHora}")
+    @PreAuthorize("hasRole('ADMINISTRACION')")  // Solo el admin puede borrar
     public void delete(
             @PathVariable Long cedulaC,
             @PathVariable Integer idHabitacion,
