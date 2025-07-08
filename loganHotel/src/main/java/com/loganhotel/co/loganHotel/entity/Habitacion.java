@@ -16,7 +16,7 @@ public class Habitacion {
     @Column(name = "idhotel", nullable = false, precision = 4)
     private Integer idHotel;
 
-    @Column(name = "idcategoria", nullable = false)
+    @Column(name = "idcategoria", nullable = true)
     private Integer idCategoria;
 
     @Column(name = "estadodisponibilidad")
