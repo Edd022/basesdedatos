@@ -31,11 +31,16 @@ public class ControllerHabitacion {
     }
 
     @PutMapping("/{idHabitacion}")
-    public void update(
-            @PathVariable Integer idHabitacion,
-            @RequestBody Habitacion nuevaHabitacion) {
-        nuevaHabitacion.setIdHabitacion(idHabitacion);
-        serviceHabitacion.saveOrUpdateHabitacion(nuevaHabitacion);
+    public void update(@PathVariable Integer idHabitacion, @RequestBody Habitacion nuevaHabitacion) {
+        // Primero obtener la habitación existente con todos sus datos
+        Habitacion habitacionExistente = serviceHabitacion.getHabitacionById(idHabitacion)
+        .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Habitación no encontrada con ID: " + idHabitacion));
+    
+        // Actualizar solo el estado de disponibilidad manteniendo el resto de datos
+        habitacionExistente.setEstadoDisponibilidad(nuevaHabitacion.getEstadoDisponibilidad());
+    
+        // Guardar la entidad con todos sus datos
+        serviceHabitacion.saveOrUpdateHabitacion(habitacionExistente);
     }
 
     @DeleteMapping("/{idHabitacion}")
