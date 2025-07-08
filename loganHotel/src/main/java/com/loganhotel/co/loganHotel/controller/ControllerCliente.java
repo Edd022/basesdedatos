@@ -8,38 +8,40 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.Optional;
-
 @RestController
 @RequestMapping("/apihotel/cliente")
-@PreAuthorize("hasRole('RECEPCION')")  // Solo recepción puede acceder
 public class ControllerCliente {
 
     @Autowired
     private ServiceCliente serviceCliente;
 
+    @PreAuthorize("hasAnyRole('SERVICIO', 'RECEPCION', 'ADMINISTRACION')")
     @GetMapping
     public List<Cliente> getAll() {
         return serviceCliente.getAllClientes();
     }
 
+    @PreAuthorize("hasAnyRole('SERVICIO', 'RECEPCION', 'ADMINISTRACION')")
     @GetMapping("/{cedulaC}")
     public Optional<Cliente> getById(@PathVariable Long cedulaC) {
         return serviceCliente.getClienteByCedula(cedulaC);
     }
 
+    @PreAuthorize("hasAnyRole('SERVICIO', 'RECEPCION')")
     @PostMapping
     public void create(@RequestBody Cliente cliente) {
         serviceCliente.saveOrUpdateCliente(cliente);
     }
 
+    @PreAuthorize("hasAnyRole('SERVICIO', 'RECEPCION')")
     @PutMapping("/{cedulaC}")
     public void update(@PathVariable Long cedulaC, @RequestBody Cliente nuevoCliente) {
         nuevoCliente.setCedulaC(cedulaC);
         serviceCliente.saveOrUpdateCliente(nuevoCliente);
     }
 
+    @PreAuthorize("hasRole('ADMINISTRACION')")
     @DeleteMapping("/{cedulaC}")
-    @PreAuthorize("hasRole('ADMINISTRACION')")  // Solo admin puede borrar
     public void delete(@PathVariable Long cedulaC) {
         serviceCliente.deleteClienteByCedula(cedulaC);
     }

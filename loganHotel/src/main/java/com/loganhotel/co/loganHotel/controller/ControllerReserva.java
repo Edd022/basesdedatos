@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/apihotel/reserva")
-@PreAuthorize("hasRole('RECEPCION')")
+@PreAuthorize("hasAnyRole('RECEPCION', 'ADMINISTRACION')")
 public class ControllerReserva {
 
     @Autowired

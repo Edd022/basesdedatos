@@ -23,41 +23,38 @@ public class SecurityConfig {
     @Autowired
     private DataSource dataSource;
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .cors(cors -> cors.configurationSource(request -> {
-                var corsConfiguration = new CorsConfiguration();
-                corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
-                corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
-                return corsConfiguration;
-            }))
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(authz -> authz
-                // Permitir acceso a Swagger UI
-                .requestMatchers("/doc/swagger-ui.html/**", 
-                               "/swagger-ui/**", 
-                               "/v3/api-docs/**").permitAll()
-                
-                // Configuración para rol RECEPCION
-                .requestMatchers("/apihotel/cliente/**").hasRole("RECEPCION")
-                .requestMatchers("/apihotel/reserva/**").hasRole("RECEPCION")
-                .requestMatchers("/apihotel/habitacion/**").hasAnyRole("RECEPCION", "SERVICIO")
-                
-                // Configuración para rol SERVICIO
-                .requestMatchers("/apihotel/adquiere/**").hasRole("SERVICIO")
-                
-                // Configuración para rol ADMINISTRACION
-                .requestMatchers("/apihotel/empleado/**").hasRole("ADMINISTRACION")
-                .requestMatchers("/apihotel/servicio/**").hasRole("ADMINISTRACION")
-                
-                .anyRequest().authenticated()
-            )
-            .httpBasic();
-        
-        return http.build();
-    }
+   @Bean
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+        .cors(cors -> cors.configurationSource(request -> {
+            var corsConfiguration = new CorsConfiguration();
+            corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
+            corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+            corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
+            return corsConfiguration;
+        }))
+        .csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(authz -> authz
+            // Permitir acceso a Swagger UI
+            .requestMatchers("/doc/swagger-ui.html/**",
+                           "/swagger-ui/**",
+                           "/v3/api-docs/**").permitAll()
+
+            // Configuración de endpoints
+            .requestMatchers("/apihotel/cliente/**").hasAnyRole("RECEPCION", "ADMINISTRACION")
+            .requestMatchers("/apihotel/reserva/**").hasAnyRole("RECEPCION", "ADMINISTRACION")
+            .requestMatchers("/apihotel/habitacion/**").hasAnyRole("RECEPCION", "SERVICIO", "ADMINISTRACION")
+            .requestMatchers("/apihotel/adquiere/**").hasAnyRole("SERVICIO", "ADMINISTRACION")
+            .requestMatchers("/apihotel/empleado/**").hasRole("ADMINISTRACION")
+            .requestMatchers("/apihotel/servicio/**").hasRole("ADMINISTRACION")
+            .requestMatchers("/apihotel/hotel/**").hasRole("ADMINISTRACION")
+
+            .anyRequest().authenticated()
+        )
+        .httpBasic();
+
+    return http.build();
+}
 
     @Bean
     public UserDetailsService userDetailsService() {

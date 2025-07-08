@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/apihotel/adquiere")
-@PreAuthorize("hasRole('SERVICIO')")  // Protege toda la clase para el rol SERVICIO
+@PreAuthorize("hasAnyRole('SERVICIO', 'ADMINISTRACION')")  // Protege toda la clase para el rol SERVICIO
 public class ControllerAdquiere {
 
     @Autowired

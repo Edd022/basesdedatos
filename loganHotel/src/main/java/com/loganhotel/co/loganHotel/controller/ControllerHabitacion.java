@@ -3,6 +3,7 @@ package com.loganhotel.co.loganHotel.controller;
 import com.loganhotel.co.loganHotel.entity.Habitacion;
 import com.loganhotel.co.loganHotel.services.ServiceHabitacion;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/apihotel/habitacion")
+@PreAuthorize("hasAnyRole('SERVICIO','ADMINISTRACION', 'RECEPCION')")
 public class ControllerHabitacion {
 
     @Autowired
