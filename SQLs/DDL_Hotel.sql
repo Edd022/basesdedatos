@@ -1,9 +1,4 @@
-
---INTEGRANTES
---Edward Julian Garcia Gaitan – 20212020136
---Andres Felipe Lopez Martinez - 20241020052
-
-
+--Creación de esquema y que las tablas se creen en el mismo
 CREATE SCHEMA IF NOT EXISTS hotel;
 SET search_path TO hotel;
 
@@ -42,7 +37,6 @@ CREATE TABLE IF NOT EXISTS ofrece(
 	idHotel NUMERIC(4),
 	idServicio NUMERIC(3)
 );
-
 
 CREATE TABLE IF NOT EXISTS servicio(
 	idServicio NUMERIC(3),
@@ -86,7 +80,6 @@ CREATE TABLE IF NOT EXISTS reserva(
 CREATE TABLE IF NOT EXISTS habitacion(
 	idHotel NUMERIC(4),
 	idHabitacion NUMERIC(4),
-	idcategoria integer,
 	estadoDisponibilidad BOOLEAN NULL,
 	precioNoche NUMERIC (7)
 );
@@ -99,15 +92,17 @@ CREATE TABLE IF NOT EXISTS caracteristicaH(
 CREATE TABLE IF NOT EXISTS tieneC(
 	idHabitacion NUMERIC(4),
 	idCategoria NUMERIC(2),
+	nombreCategoria VARCHAR (255)
 );
 
 CREATE TABLE IF NOT EXISTS categoria(
+	idHabitacion NUMERIC(4),
 	idCategoria INT GENERATED ALWAYS AS IDENTITY,
 	nombreCategoria VARCHAR(255)	
 );
 
 CREATE TABLE IF NOT EXISTS adquiere(
-	cedulaC NUMERIC(11),
+	cedulac NUMERIC(11),
 	idHabitacion NUMERIC(4),
 	idServicio NUMERIC(3),
 	fechaHora TIMESTAMP
@@ -140,8 +135,6 @@ REFERENCES empleado (cedulaE);
 ALTER TABLE trabaja
 ADD CONSTRAINT FK_idHotelTra FOREIGN KEY (idHotel)
 REFERENCES hotel (idHotel);
-ALTER TABLE trabaja
-ADD CONSTRAINT PK_trabaja PRIMARY KEY (cedulae, idhotel);
 
 --servicio
 ALTER TABLE servicio
@@ -154,8 +147,6 @@ REFERENCES hotel (idHotel);
 ALTER TABLE ofrece
 ADD CONSTRAINT FK_idServicioO FOREIGN KEY (idServicio)
 REFERENCES servicio (idServicio);
-ALTER TABLE ofrece
-ADD CONSTRAINT PK_ofrece PRIMARY KEY (idhotel, idservicio)
 
 --habitacion
 ALTER TABLE habitacion
@@ -163,9 +154,6 @@ ADD CONSTRAINT FK_idHotelH FOREIGN KEY (idHotel)
 REFERENCES hotel (idHotel);
 ALTER TABLE habitacion
 ADD CONSTRAINT PK_habitacion PRIMARY KEY (idHabitacion);
-ALTER TABLE habitacion
-ADD CONSTRAINT FK_categoriaH FOREIGN KEY (idcategoria)
-REFERENCES categoria (idcategoria)
 
 --caracteristicaS
 ALTER TABLE caracteristicaS
@@ -200,7 +188,7 @@ ALTER TABLE reserva
 ADD CONSTRAINT FK_cedulaCR FOREIGN KEY (cedulaC)
 REFERENCES cliente(cedulaC);
 ALTER TABLE reserva
-ADD CONSTRAINT PK_idReserva PRIMARY KEY (idReserva, cedulaC, fechaLlegada);
+ADD CONSTRAINT PK_idReserva PRIMARY KEY (idReserva);
 
 --caracteristicaH
 ALTER TABLE caracteristicaH 
@@ -210,6 +198,9 @@ ALTER TABLE caracteristicaH
 ADD CONSTRAINT PK_caracteristicaH PRIMARY KEY (idHabitacion, caracteristicaH);
 
 --categoria
+ALTER TABLE categoria 
+ADD CONSTRAINT FK_idHabitacionC FOREIGN KEY (idHabitacion)
+REFERENCES habitacion (idHabitacion);
 ALTER TABLE categoria
 ADD CONSTRAINT PK_categoria PRIMARY KEY (idCategoria);
 
@@ -224,4 +215,4 @@ ALTER TABLE adquiere
 ADD CONSTRAINT FK_idServicio FOREIGN KEY (idServicio)
 REFERENCES servicio (idServicio);
 ALTER TABLE adquiere 
-ADD CONSTRAINT PK_adquiere PRIMARY KEY (cedulaC, idHabitacion, idServicio, fechaHora);x|
+ADD CONSTRAINT PK_adquiere PRIMARY KEY (cedulaC, idHabitacion, idServicio, fechaHora);
